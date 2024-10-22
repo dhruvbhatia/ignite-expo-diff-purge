@@ -1,0 +1,92 @@
+diff --git a/IgniteDiffApp/app.json b/IgniteDiffApp/app.json
+index 2717c34..5e3ff36 100644
+--- a/IgniteDiffApp/app.json
++++ b/IgniteDiffApp/app.json
+@@ -74,6 +74,6 @@
+     }
+   },
+   "ignite": {
+-    "version": "10.0.1"
++    "version": "10.0.0"
+   }
+ }
+\ No newline at end of file
+diff --git a/IgniteDiffApp/app/components/Toggle/Checkbox.tsx b/IgniteDiffApp/app/components/Toggle/Checkbox.tsx
+index 17b8619..74c7374 100644
+--- a/IgniteDiffApp/app/components/Toggle/Checkbox.tsx
++++ b/IgniteDiffApp/app/components/Toggle/Checkbox.tsx
+@@ -1,4 +1,4 @@
+-import { useEffect, useRef, useCallback } from "react"
++import { useEffect, useRef } from "react"
+ import { Image, ImageStyle, Animated, StyleProp, View, ViewStyle } from "react-native"
+ import { $styles } from "../../theme"
+ import { iconRegistry, IconTypes } from "../Icon"
+@@ -24,12 +24,7 @@ interface CheckboxInputProps extends BaseToggleInputProps<CheckboxToggleProps> {
+  * @returns {JSX.Element} The rendered `Checkbox` component.
+  */
+ export function Checkbox(props: CheckboxToggleProps) {
+-  const { icon, ...rest } = props
+-  const checkboxInput = useCallback(
+-    (toggleProps: CheckboxInputProps) => <CheckboxInput {...toggleProps} icon={icon} />,
+-    [icon],
+-  )
+-  return <Toggle accessibilityRole="checkbox" {...rest} ToggleInput={checkboxInput} />
++  return <Toggle accessibilityRole="checkbox" {...props} ToggleInput={CheckboxInput} />
+ }
+ 
+ function CheckboxInput(props: CheckboxInputProps) {
+diff --git a/IgniteDiffApp/app/components/Toggle/Switch.tsx b/IgniteDiffApp/app/components/Toggle/Switch.tsx
+index af2c995..4d5be39 100644
+--- a/IgniteDiffApp/app/components/Toggle/Switch.tsx
++++ b/IgniteDiffApp/app/components/Toggle/Switch.tsx
+@@ -1,4 +1,4 @@
+-import { useEffect, useMemo, useRef, useCallback } from "react"
++import { useEffect, useMemo, useRef } from "react"
+ import {
+   Animated,
+   Image,
+@@ -38,14 +38,7 @@ interface SwitchInputProps extends BaseToggleInputProps<SwitchToggleProps> {
+  * @returns {JSX.Element} The rendered `Switch` component.
+  */
+ export function Switch(props: SwitchToggleProps) {
+-  const { accessibilityMode, ...rest } = props
+-  const switchInput = useCallback(
+-    (toggleProps: SwitchInputProps) => (
+-      <SwitchInput {...toggleProps} accessibilityMode={accessibilityMode} />
+-    ),
+-    [accessibilityMode],
+-  )
+-  return <Toggle accessibilityRole="switch" {...rest} ToggleInput={switchInput} />
++  return <Toggle accessibilityRole="switch" {...props} ToggleInput={SwitchInput} />
+ }
+ 
+ function SwitchInput(props: SwitchInputProps) {
+diff --git a/IgniteDiffApp/app/screens/DemoShowroomScreen/demos/DemoToggle.tsx b/IgniteDiffApp/app/screens/DemoShowroomScreen/demos/DemoToggle.tsx
+index e120a13..0a8775b 100644
+--- a/IgniteDiffApp/app/screens/DemoShowroomScreen/demos/DemoToggle.tsx
++++ b/IgniteDiffApp/app/screens/DemoShowroomScreen/demos/DemoToggle.tsx
+@@ -13,7 +13,7 @@ import {
+ import { Demo } from "../DemoShowroomScreen"
+ import { DemoDivider } from "../DemoDivider"
+ import { DemoUseCase } from "../DemoUseCase"
+-import { $styles, type ThemedStyle } from "@/theme"
++import type { ThemedStyle } from "@/theme"
+ import { translate } from "@/i18n"
+ 
+ function ControlledCheckbox(props: CheckboxToggleProps) {
+@@ -70,7 +70,6 @@ export const DemoToggle: Demo = {
+       name="demoToggle:useCase.statuses.name"
+       description="demoToggle:useCase.statuses.description"
+       layout="row"
+-      itemStyle={$styles.flexWrap}
+     >
+       <ControlledCheckbox containerStyle={$centeredOneThirdCol} />
+       <ControlledRadio containerStyle={$centeredOneThirdCol} />
+@@ -167,7 +166,6 @@ export const DemoToggle: Demo = {
+       name="demoToggle:useCase.styling.name"
+       description="demoToggle:useCase.styling.description"
+       layout="row"
+-      itemStyle={$styles.flexWrap}
+     >
+       <ControlledCheckbox
+         containerStyle={$centeredOneThirdCol}
